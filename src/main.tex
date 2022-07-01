@@ -1,0 +1,379 @@
+%! Author = zjs
+%! Date = 6/27/22
+
+% Preamble
+\documentclass{ctexbeamer}
+\usepackage{braket}
+\usepackage{fancyvrb}
+%\usepackage[outputDir=../out, hybrid]{markdown}
+\usepackage{textcomp}
+\usepackage{amsmath}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\gray}[1]{\textcolor{gray}{#1}}
+\newcommand{\lime}[1]{\textcolor{lime}{#1}}
+\newcommand{\purple}[1]{\textcolor{purple}{#1}}
+\newcommand{\str}[1]{\texttt{#1}}
+\newcommand{\fail}{\mathsf{fail}}
+
+\DefineVerbatimEnvironment%tight verbatim
+{tverb}{Verbatim}
+{commandchars=\\\{\},baselinestretch=0,frame=bottomline, fontsize=\small}
+
+\newenvironment{fframe}{\begin{frame}[fragile]}{\end{frame}}
+
+
+\DefineVerbatimEnvironment%tight verbatim
+{bverb}{BVerbatim}
+{commandchars=\\\{\},baselinestretch=0, fontsize=\small}
+% Packages
+
+% Document
+\begin{document}
+\title{KMP算法}
+\author{邹家树}
+\institute{小码王}
+\maketitle
+
+\begin{frame}[fragile]
+	\frametitle{问题：字符串匹配}
+
+\begin{itemize}
+\item 字符串下标从1开始。
+\item 字符串 $S$ 的第 $i$ 个字符记作 $S_i$。
+\end{itemize}
+
+    模式串$P$，文本串$T$。
+    模式串在文本串的哪些地方出现过？
+    $P=\str{aba}$，$T=\str{ababa}$。答案：$\set{1, 3}$。
+
+\begin{itemize}
+\item 文本串长度记作 $n$
+\item 模式串长度记作 $m$
+\end{itemize}
+
+若 $T_{i..m+i-1} = P$ 则称 $i$ 是\emph{匹配点}。
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{暴力匹配算法}
+
+\begin{itemize}
+\item 第$i$次匹配：把模式串开头和文本串第$i$个字符对齐，从头开始比较。遇到文本串和模式串里对应字符不相同（称为失配）就停止。
+\item 共匹配 $n-m+1$次。
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{暴力匹配算法示例}
+P= \texttt{abcabcacab}，T=\texttt{babcbabcabcaabcabcabcacabc}。
+
+\begin{minipage}[t]{0.5\textwidth}
+	\begin{tverb}
+\red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+	\begin{tverb}
+ \green{abc}\red{a}bcacab \(4\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+
+	\begin{tverb}
+  \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+	\begin{tverb}
+   \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+	\begin{tverb}
+    \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+	\begin{tverb}
+     \green{abcabca}\red{c}ab \(8\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+	\begin{tverb}
+      \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+	\begin{tverb}
+       \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+	\begin{tverb}
+        \green{abca}\red{b}cacab \(5\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+\end{minipage}%
+\begin{minipage}[t]{.5\textwidth}
+
+\begin{tverb}
+         \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+\begin{tverb}
+          \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+\begin{tverb}
+           \green{a}\red{b}cabcacab \(2\)
+babcbabcabcaabcabcabcacabc
+    	\end{tverb}
+
+\begin{tverb}
+            \green{abcabca}\red{c}ab \(7\)
+babcbabcabcaabcabcabcacabc
+            	\end{tverb}
+
+\begin{tverb}
+             \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}
+              \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+            	\end{tverb}
+
+\begin{tverb}
+               \green{abcabcacab} \(10\)
+babcbabcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}
+                \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+            	\end{tverb}
+
+
+\end{minipage}
+
+
+
+一共比较了 $47$ 次。
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{暴力匹配算法的时间复杂度}
+
+最坏情况时间复杂度是 $O(nm)$。
+
+
+P=\texttt{aaaaaaab}，T=\texttt{aaaaaaaaaaaaaaaaaaaab}。
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{改进暴力匹配算法}
+
+观察暴力匹配算法前五次匹配过程。
+
+	\begin{tverb}
+\red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+\begin{tverb}
+ abcabcacab \(4\)
+b\green{abc}\red{b}abcabcaabcabcabcacabc
+	\end{tverb}
+
+
+	\begin{tverb}
+  \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+	\begin{tverb}
+   \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+	\begin{tverb}
+    \red{a}bcabcacab \(1\)
+babcbabcabcaabcabcabcacabc
+	\end{tverb}
+
+从``第二次失配发生在$P_4$处''，我们可以知道关于文本串$T$的两件事：
+\begin{itemize}
+\item $T$ 的第二到第四个字符等于 $P$ 的前三个字符（\str{abc}）。
+\item $T_5$不等于$P_4$（\str{a}）。
+\end{itemize}
+用这两个条件就能断定随后的三次匹配在$P_1$处就失配。
+
+充分挖模式串的特点，失配信息可以用来预判之后的匹配结果。
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{改进暴力匹配算法}
+
+\begin{tverb}
+abcabcacab
+\red{b}abcbabcabcaabcabcabcacabc \(1\)
+\end{tverb}
+
+	\begin{tverb}
+ abcabcacab
+b\green{abc}\red{b}abcabcaabcabcabcacabc \(4\)
+	\end{tverb}
+
+\begin{tverb}
+     abcabcacab
+ba\gray{bcb}abcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}
+     abcabcacab
+babcb\green{abcabca}\red{a}bcabcabcacabc \(8\)
+\end{tverb}
+
+\begin{tverb}
+        abcabcacab
+babcbabc\lime{abca}\purple{a}bcabcabcacabc
+\end{tverb}
+
+\begin{tverb}
+        abcabcacab
+babcbabc\lime{abca}\red{a}bcabcabcacabc \(1\)
+\end{tverb}
+
+\begin{tverb}
+            abcabcacab
+babcbabca\gray{bca}\purple{a}bcabcabcacabc
+\end{tverb}
+
+\begin{tverb}
+            abcabcacab
+babcbabcabca\green{abcabca}\red{b}cacabc \(8\)
+\end{tverb}
+
+\begin{tverb}
+               abcabcacab
+babcbabcabcaa\gray{bc}\lime{abca}\purple{b}cacabc
+\end{tverb}
+
+\begin{tverb}
+               abcabcacab
+babcbabcabcaabc\lime{abca}\green{bcacab}c \(6\)
+\end{tverb}
+
+\begin{tverb}
+                       abcabcacab
+babcbabcabcaabca\gray{bcabcac}\lime{ab}c           一共比较了\(28\)次
+\end{tverb}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{改进暴力匹配算法}
+
+
+当 $T_i$ 和 $P_j$ 失配时（此时 $P_1$ 和 $T_{i - j + 1}$对齐），用
+\begin{itemize}
+\item $P_{1..j-1} = T_{i - j + 1..i-1}$
+\item $P_j \ne T_i$
+\end{itemize}
+两条件找$\set{i - j + 2, \dots, i}$里下一个可能的匹配点。
+
+\begin{block}{}
+对于 $k = i - j + 2, \dots, i - 1$，$k$ 是匹配点的必要条件有
+\begin{itemize}
+\item $P_{1..i-k} = T_{k..i-1} $ 即 $P_{1..i-k} = P_{j - i+k ..j - 1}$
+\item $P_{i - k + 1} \ne P_j$
+\end{itemize}
+
+$i$ 是匹配点的必要条件有
+\begin{itemize}
+\item $P_1 \ne P_j$
+\end{itemize}
+
+\end{block}
+
+
+\begin{block}{要点}
+\begin{itemize}
+\item 用来找下一个可能的匹配点的条件都是关于模式串$P$的。
+\item 找到下一个可能的匹配点 $k$ 之后就从 $T_i$ 和 $P_{i - k + 1}$ 开始继续比较，不必从 $T_k$ 和 $P_1$ 开始比较。
+\end{itemize}
+\end{block}
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{改进暴力匹配算法}
+充分利用模式串 $P$ 的特点，事先算出一个函数fail。
+
+\begin{itemize}
+\item $\text{fail}(j)$ := 匹配过程中遇到$T_i$ 和 $P_j$ 失配时，接着拿 $T_i$ 和 $P_{\text{fail}(j)}$ 比较。
+\item $\text{fail}(j) = 0$ 意味着下一个可能的匹配点是 $i+1$。
+\end{itemize}
+
+
+
+
+%abcabcacab
+%         abcab
+\begin{table}[]
+\begin{tabular}{llllllllllll}
+下标$j$ & 1  & 2  & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+$S_j$ & \str{a} & \str{b} & \str{c} & \str{a} & \str{b} & \str{c} & \str{a} & \str{c} & \str{a}  & \str{b} \\
+fail($j$) & 0  & 1  & 1 & 0 & 1 & 1 & 0 & 5  & 0  & 1
+\end{tabular}
+\end{table}
+
+\begin{block}{}
+如何计算 fail 函数？
+\end{block}
+
+
+
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{计算fail函数}
+
+
+\begin{itemize}
+\item 边界条件：$\text{fail}(1) = 0$。
+\item 对于 $j = 2, 3, \dots, m$，若 $1, \dots, j - 1$ 中存在 $k$ 满足
+{
+\begin{itemize}
+\item $P_{1..k - 1} = P_{j - (k - 1) .. j - 1}$ 且 $P_{k} \ne P_j$。
+\end{itemize}
+则 $\fail(j) = $满足此条件的最大的 $k$，否则 $\fail(j) = 0$。
+}
+\end{itemize}
+
+\begin{block}{}
+上面写出的 $\fail(j) =  \dots$ 是依照``充分利用模式串 $P$ 的特点进行预判，从而避免不必要的比较''这个想法给 $\fail(j)$ 下的定义。不过从这个定义并不容易看出如何计算 $\fail(j)$。
+\end{block}
+
+
+\begin{block}{}
+我们可以从另一个角度来思考 $\fail(j)$ 应该等于多少。
+\end{block}
+
+\end{frame}
+
+\end{document}
+%
