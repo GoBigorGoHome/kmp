@@ -12,6 +12,7 @@
 \usepackage{xcolor}
 \usepackage{tcolorbox}
 
+\newcommand{\ul}[1]{\underline{#1}}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 \newcommand{\pink}[1]{\textcolor{pink}{#1}}
 \newcommand{\green}[1]{\textcolor{green}{#1}}
@@ -20,10 +21,11 @@
 \newcommand{\purple}[1]{\textcolor{purple}{#1}}
 \newcommand{\str}[1]{\texttt{#1}}
 \newcommand{\fail}{\mathsf{fail}}
-
+\newcommand{\ugrn}[1]{\underline{\green{#1}}}
+\newcommand{\ured}[1]{\underline{\red{#1}}}
 \DefineVerbatimEnvironment%tight verbatim
 {tverb}{Verbatim} %在tverb环境里，verbamtim 的 \, {, } 需要escape。
-{commandchars=\\\{\},baselinestretch=0, fontsize=\small}
+{commandchars=\\\{\},baselinestretch=0}
 
 
 \DefineVerbatimEnvironment%tight verbatim
@@ -89,48 +91,48 @@ for (int i = 1; i <= n - m + 1; i++) {
 P= \texttt{abcabcacab}，T=\texttt{babcbabcabcaabcabcabcacabc}。
 
 \begin{minipage}[t]{0.5\textwidth}
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
 abcabcacab \(1\)
 \red{b}abcbabcabcaabcabcabcacabc
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
  abcabcacab \(4\)
 b\green{abc}\red{b}abcabcaabcabcabcacabc
 \end{tverb}
 
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
   abcabcacab \(1\)
 ba\red{b}cbabcabcaabcabcabcacabc
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
    abcabcacab \(1\)
 bab\red{c}babcabcaabcabcabcacabc
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
     abcabcacab \(1\)
 babc\red{b}abcabcaabcabcabcacabc
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
      abcabcacab \(8\)
 babcb\green{abcabca}\red{a}bcabcabcacabc
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
       abcabcacab \(1\)
 babcba\red{b}cabcaabcabcabcacabc
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
        abcabcacab \(1\)
 babcbab\red{c}abcaabcabcabcacabc
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
         abcabcacab \(5\)
 babcbabc\green{abca}\red{a}bcabcabcacabc
 \end{tverb}
@@ -138,42 +140,42 @@ babcbabc\green{abca}\red{a}bcabcabcacabc
 \end{minipage}%
 \begin{minipage}[t]{.5\textwidth}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
          abcabcacab \(1\)
 babcbabca\red{b}caabcabcabcacabc
 	\end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
           abcabcacab \(1\)
 babcbabcab\red{c}aabcabcabcacabc
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
            abcabcacab \(2\)
 babcbabcabc\green{a}\red{a}bcabcabcacabc
     	\end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
             abcabcacab \(7\)
 babcbabcabca\green{abcabca}\red{b}cacabc
             	\end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
              abcabcacab \(1\)
 babcbabcabcaa\red{b}cabcabcacabc
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
               abcabcacab \(1\)
 babcbabcabcaab\red{c}abcabcacabc
             	\end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
                abcabcacab \(10\)
 babcbabcabcaabc\green{abcabcacab}c
 \end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
                 abcabcacab \(1\)
 babcbabcabcaabca\red{b}cabcacabc
 \end{tverb}
@@ -201,28 +203,28 @@ P=\texttt{aaaaaaab}，T=\texttt{aaaaaaaaaaaaaaaaaaaab}。
 
 观察暴力匹配算法前五次匹配过程。
 
-	\begin{tverb}
+	\begin{tverb}[frame=bottomline, fontsize=\small]
 abcabcacab \(1\)
 \red{b}abcbabcabcaabcabcabcacabc
 	\end{tverb}
 
-\begin{tverb}
+\begin{tverb}[frame=bottomline, fontsize=\small]
  abcabcacab \(4\)
 b\green{abc}\red{b}abcabcaabcabcabcacabc
 	\end{tverb}
 
 
-	\begin{tverb}
+	\begin{tverb}[frame=bottomline, fontsize=\small]
   abcabcacab \(1\)
 ba\red{b}cbabcabcaabcabcabcacabc
 	\end{tverb}
 
-	\begin{tverb}
+	\begin{tverb}[frame=bottomline, fontsize=\small]
    abcabcacab \(1\)
 bab\red{c}babcabcaabcabcabcacabc
 	\end{tverb}
 
-	\begin{tverb}
+	\begin{tverb}[frame=bottomline, fontsize=\small]
     abcabcacab \(1\)
 babc\red{b}abcabcaabcabcabcacabc
 	\end{tverb}
@@ -241,57 +243,57 @@ babc\red{b}abcabcaabcabcabcacabc
 \begin{frame}[fragile]
 \frametitle{改进暴力匹配算法}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
 abcabcacab
 \red{b}abcbabcabcaabcabcabcacabc \(1\)
 \end{tverb}
 
-	\begin{tverb}[frame=bottomline]
+	\begin{tverb}[frame=bottomline, fontsize=\small]
  abcabcacab
 \gray{b}\green{abc}\red{b}abcabcaabcabcabcacabc \(4\)
 	\end{tverb}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
      abcabcacab
 \gray{ba}\pink{bcb}abcabcaabcabcabcacabc
 \end{tverb}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
      abcabcacab
 \gray{babcb}\green{abcabca}\red{a}bcabcabcacabc \(8\)
 \end{tverb}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
         abcabcacab
 \gray{babcba}\pink{bc}\lime{abca}\purple{a}bcabcabcacabc
 \end{tverb}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
         abcabcacab
 \gray{babcbabc}\lime{abca}\red{a}bcabcabcacabc \(1\)
 \end{tverb}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
             abcabcacab
 \gray{babcbabca}\pink{bca}\purple{a}bcabcabcacabc
 \end{tverb}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
             abcabcacab
 \gray{babcbabcabca}\green{abcabca}\red{b}cacabc \(8\)
 \end{tverb}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
                abcabcacab
 \gray{babcbabcabcaa}\pink{bc}\lime{abca}\purple{b}cacabc
 \end{tverb}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
                abcabcacab
 \gray{babcbabcabcaabc}\lime{abca}\green{bcacab}c \(6\)
 \end{tverb}
 
-\begin{tverb}[frame=bottomline]
+\begin{tverb}[frame=bottomline, fontsize=\small]
                        abcabcacab
 \gray{babcbabcabcaabca}\pink{bcabcac}\lime{ab}c           一共比较了\(28\)次
 \end{tverb}
@@ -332,6 +334,98 @@ $i$ 是匹配点的必要条件有
 \end{block}
 
 
+
+\end{frame}
+
+\begin{frame}[fragile]{改进暴力匹配算法}
+
+\begin{minipage}[t]{0.45\textwidth}
+
+\begin{tverb}[fontsize=\tiny]
+abcabcacab
+\ured{b}abcbabcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+ abcabcacab
+\ul{\gray{b}}abcbabcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+ abcabcacab
+\gray{b}\ugrn{a}bcbabcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+ abcabcacab
+\gray{b}\green{a}\ugrn{b}cbabcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+ abcabcacab
+\gray{b}\green{ab}\ugrn{c}babcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+ abcabcacab
+\gray{b}\green{abc}\ul{\red{b}}abcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+     abcabcacab
+\gray{babc}\ul{\gray{b}}abcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+     abcabcacab
+\gray{babcb}\ugrn{a}bcabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+     abcabcacab
+\gray{babcb}\green{a}\ugrn{b}cabcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+     abcabcacab
+\gray{babcb}\green{ab}\ugrn{c}abcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+     abcabcacab
+\gray{babcb}\green{abc}\ugrn{a}bcaabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+     abcabcacab
+\gray{babcb}\green{abca}\underline{\green{b}}caabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+     abcabcacab
+\gray{babcb}\green{abcab}\underline{\green{c}}aabcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+     abcabcacab
+\gray{babcb}\green{abcabc}\underline{\green{a}}abcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+     abcabcacab
+\gray{babcb}\green{abcabca}\ured{a}bcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+        abcabcacab
+\gray{babcbabc}\lime{abca}\ured{a}bcabcabcacabc
+\end{tverb}
+
+\end{minipage}%
+%
+\begin{minipage}[t]{.45\textwidth}
+
+\end{minipage}
 
 \end{frame}
 
@@ -452,7 +546,7 @@ $P_{1..3}$ 的最长前后缀长度是 $0$，先把 $P$ 向右移动 $(3-0)$ 格
 \end{frame}
 
 
-\begin{frame}[fragile]{计算fail函数：例二}
+\begin{frame}[fragile]{计算fail函数：例二，计算$\fail(8)$}
 
 \begin{tverb}
  abcabcacab
