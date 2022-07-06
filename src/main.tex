@@ -87,94 +87,94 @@ for (int i = 1; i <= n - m + 1; i++) {
 P= \texttt{abcabcacab}，T=\texttt{babcbabcabcaabcabcabcacabc}。
 
 \begin{minipage}[t]{0.5\textwidth}
-	\begin{tverb}
-\red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+\begin{tverb}
+abcabcacab \(1\)
+\red{b}abcbabcabcaabcabcabcacabc
+\end{tverb}
 
-	\begin{tverb}
- \green{abc}\red{a}bcacab \(4\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+\begin{tverb}
+ abcabcacab \(4\)
+b\green{abc}\red{b}abcabcaabcabcabcacabc
+\end{tverb}
 
 
-	\begin{tverb}
-  \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+\begin{tverb}
+  abcabcacab \(1\)
+ba\red{b}cbabcabcaabcabcabcacabc
+\end{tverb}
 
-	\begin{tverb}
-   \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+\begin{tverb}
+   abcabcacab \(1\)
+bab\red{c}babcabcaabcabcabcacabc
+\end{tverb}
 
-	\begin{tverb}
-    \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+\begin{tverb}
+    abcabcacab \(1\)
+babc\red{b}abcabcaabcabcabcacabc
+\end{tverb}
 
-	\begin{tverb}
-     \green{abcabca}\red{c}ab \(8\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+\begin{tverb}
+     abcabcacab \(8\)
+babcb\green{abcabca}\red{a}bcabcabcacabc
+\end{tverb}
 
-	\begin{tverb}
-      \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+\begin{tverb}
+      abcabcacab \(1\)
+babcba\red{b}cabcaabcabcabcacabc
+\end{tverb}
 
-	\begin{tverb}
-       \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+\begin{tverb}
+       abcabcacab \(1\)
+babcbab\red{c}abcaabcabcabcacabc
+\end{tverb}
 
-	\begin{tverb}
-        \green{abca}\red{b}cacab \(5\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+\begin{tverb}
+        abcabcacab \(5\)
+babcbabc\green{abca}\red{a}bcabcabcacabc
+\end{tverb}
 
 \end{minipage}%
 \begin{minipage}[t]{.5\textwidth}
 
 \begin{tverb}
-         \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
+         abcabcacab \(1\)
+babcbabca\red{b}caabcabcabcacabc
 	\end{tverb}
 
 \begin{tverb}
-          \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
-	\end{tverb}
+          abcabcacab \(1\)
+babcbabcab\red{c}aabcabcabcacabc
+\end{tverb}
 
 \begin{tverb}
-           \green{a}\red{b}cabcacab \(2\)
-babcbabcabcaabcabcabcacabc
+           abcabcacab \(2\)
+babcbabcabc\green{a}\red{a}bcabcabcacabc
     	\end{tverb}
 
 \begin{tverb}
-            \green{abcabca}\red{c}ab \(7\)
-babcbabcabcaabcabcabcacabc
+            abcabcacab \(7\)
+babcbabcabca\green{abcabca}\red{b}cacabc
             	\end{tverb}
 
 \begin{tverb}
-             \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
+             abcabcacab \(1\)
+babcbabcabcaa\red{b}cabcabcacabc
 \end{tverb}
 
 \begin{tverb}
-              \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
+              abcabcacab \(1\)
+babcbabcabcaab\red{c}abcabcacabc
             	\end{tverb}
 
 \begin{tverb}
-               \green{abcabcacab} \(10\)
-babcbabcabcaabcabcabcacabc
+               abcabcacab \(10\)
+babcbabcabcaabc\green{abcabcacab}c
 \end{tverb}
 
 \begin{tverb}
-                \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
-            	\end{tverb}
+                abcabcacab \(1\)
+babcbabcabcaabca\red{b}cabcacabc
+\end{tverb}
 
 
 \end{minipage}
@@ -200,8 +200,8 @@ P=\texttt{aaaaaaab}，T=\texttt{aaaaaaaaaaaaaaaaaaaab}。
 观察暴力匹配算法前五次匹配过程。
 
 	\begin{tverb}
-\red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
+abcabcacab \(1\)
+\red{b}abcbabcabcaabcabcabcacabc
 	\end{tverb}
 
 \begin{tverb}
@@ -211,18 +211,18 @@ b\green{abc}\red{b}abcabcaabcabcabcacabc
 
 
 	\begin{tverb}
-  \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
+  abcabcacab \(1\)
+ba\red{b}cbabcabcaabcabcabcacabc
 	\end{tverb}
 
 	\begin{tverb}
-   \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
+   abcabcacab \(1\)
+bab\red{c}babcabcaabcabcabcacabc
 	\end{tverb}
 
 	\begin{tverb}
-    \red{a}bcabcacab \(1\)
-babcbabcabcaabcabcabcacabc
+    abcabcacab \(1\)
+babc\red{b}abcabcaabcabcabcacabc
 	\end{tverb}
 
 从``第二次失配发生在$P_4$处''，我们可以知道关于文本串$T$的两件事：
@@ -373,7 +373,7 @@ fail($j$) & 0  & 1  & 1 & 0 & 1 & 1 & 0 & 5  & 0  & 1
 \end{block}
 
 \begin{block}{前后缀}
-对于非空字符串 $S$，若字符串 $T$ 既是 $S$ 的恰当前缀也是 $S$ 的后缀，则称 $T$ 为 $S$ 的前后缀。例如 \str{abc} 的前后缀有：空串，\str{ababa} 的前后缀有：空串，\str{a}，\str{aba}，
+对于非空字符串 $S$，若字符串 $T$ 既是 $S$ 的恰当前缀也是 $S$ 的后缀，则称 $T$ 为 $S$ 的前后缀。例如 \str{abc} 的前后缀有：空串；\str{ababa} 的前后缀有：空串，\str{a}，\str{aba}；
 \str{aaa} 的前后缀有：空串，\str{a}，\str{aa}。
 
 任何非空字符串都有前后缀。
