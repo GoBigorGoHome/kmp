@@ -337,22 +337,16 @@ $i$ 是匹配点的必要条件有
 
 \begin{frame}
 \frametitle{改进暴力匹配算法}
-充分利用模式串 $P$ 的特点，事先算出一个函数fail。
+充分利用模式串 $P$ 的特点，事先算出一个函数$\fail$。
 
 \begin{itemize}
+\item $\fail$ 的定义域是 $\set{1, 2, \dots, m}$。
 \item $\text{fail}(j)$ := 匹配过程中遇到$T_i$ 和 $P_j$ 失配时，接着拿 $T_i$ 和 $P_{\text{fail}(j)}$ 比较。
 \item $\text{fail}(j) = 0$ 意味着下一个可能的匹配点是 $i+1$。
+\item $\fail$ 函数完全由模式串 $P$ 决定。
 \end{itemize}
 
-\begin{block}{}
-如何计算 fail 函数？
-\end{block}
-
-\end{frame}
-
-
-\begin{frame}{$\fail$函数}
-$\fail$ 函数完全由模式串 $P$ 决定。$P=\str{abcabcacab}$ 对应的 $\fail$ 函数是
+$P=\str{abcabcacab}$ 对应的 $\fail$ 函数是
 
 \begin{table}[]
 \begin{tabular}{llllllllllll}
@@ -361,8 +355,6 @@ $S_j$ & \str{a} & \str{b} & \str{c} & \str{a} & \str{b} & \str{c} & \str{a} & \s
 fail($j$) & 0  & 1  & 1 & 0 & 1 & 1 & 0 & 5  & 0  & 1
 \end{tabular}
 \end{table}
-
-
 
 \end{frame}
 
@@ -558,7 +550,7 @@ abcabcacab \(\scriptstyle\fail(1)=0\)
 
 \begin{itemize}
     \item 算法的过程大概是 $T_1$ 和 $P$里的若干个字符比较，$T_2$ 和 $P$ 里的若干个字符比较，……，$T_n$ 和 $P$ 里若干个字符比较。
-    \item 对于$T_i$的比较完成后，我们知道了 $T_{1..i}$ 的后缀当中是 $P$ 的前缀的最长后缀的长度。
+    \item 对于$T_i$的比较完成后，我们知道了既是 $T_{1..i}$ 的后缀又是 $P$ 的前缀的字符串最长可以达到多长。
     \item 每次比较之后要么文本串$T$里的下划线右移，要么模式串$P$右移。二者的移动次数都不会超过$n$。
     \item 算出 $\fail$ 函数之后可以在 $O(n)$ 的时间内完成字符串匹配。
 \end{itemize}
