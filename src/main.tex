@@ -333,16 +333,55 @@ $i$ 是匹配点的必要条件有
 \end{itemize}
 \end{block}
 
+\end{frame}
+
+\begin{frame}
+\frametitle{改进暴力匹配算法}
+充分利用模式串 $P$ 的特点，事先算出一个函数fail。
+
+\begin{itemize}
+\item $\text{fail}(j)$ := 匹配过程中遇到$T_i$ 和 $P_j$ 失配时，接着拿 $T_i$ 和 $P_{\text{fail}(j)}$ 比较。
+\item $\text{fail}(j) = 0$ 意味着下一个可能的匹配点是 $i+1$。
+\end{itemize}
+
+\begin{block}{}
+如何计算 fail 函数？
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{$\fail$函数}
+$\fail$ 函数完全由模式串 $P$ 决定。$P=\str{abcabcacab}$ 对应的 $\fail$ 函数是
+
+\begin{table}[]
+\begin{tabular}{llllllllllll}
+下标$j$ & 1  & 2  & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+$S_j$ & \str{a} & \str{b} & \str{c} & \str{a} & \str{b} & \str{c} & \str{a} & \str{c} & \str{a}  & \str{b} \\
+fail($j$) & 0  & 1  & 1 & 0 & 1 & 1 & 0 & 5  & 0  & 1
+\end{tabular}
+\end{table}
+
 
 
 \end{frame}
 
-\begin{frame}[fragile]{改进暴力匹配算法}
 
-\begin{minipage}[t]{0.45\textwidth}
+\begin{frame}[fragile]{用$\fail$函数改进暴力匹配算法}
+
+\begin{table}[]
+\begin{tabular}{llllllllllll}
+下标$j$ & 1  & 2  & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+%$S_j$ & \str{a} & \str{b} & \str{c} & \str{a} & \str{b} & \str{c} & \str{a} & \str{c} & \str{a}  & \str{b} \\
+fail($j$) & 0  & 1  & 1 & 0 & 1 & 1 & 0 & 5  & 0  & 1
+\end{tabular}
+\end{table}
+
+%minipage #1
+\begin{minipage}[t]{0.33\textwidth}
 
 \begin{tverb}[fontsize=\tiny]
-abcabcacab
+abcabcacab \(\scriptstyle\fail(1)=0\)
 \ured{b}abcbabcabcaabcabcabcacabc
 \end{tverb}
 
@@ -367,7 +406,7 @@ abcabcacab
 \end{tverb}
 
 \begin{tverb}[fontsize=\tiny]
- abcabcacab
+ abcabcacab \(\scriptstyle\fail(4)=0\)
 \gray{b}\green{abc}\ul{\red{b}}abcabcaabcabcabcacabc
 \end{tverb}
 
@@ -390,7 +429,10 @@ abcabcacab
      abcabcacab
 \gray{babcb}\green{ab}\ugrn{c}abcaabcabcabcacabc
 \end{tverb}
-
+\end{minipage}%
+%
+% minipage #2
+\begin{minipage}[t]{0.33\textwidth}
 \begin{tverb}[fontsize=\tiny]
      abcabcacab
 \gray{babcb}\green{abc}\ugrn{a}bcaabcabcabcacabc
@@ -412,50 +454,119 @@ abcabcacab
 \end{tverb}
 
 \begin{tverb}[fontsize=\tiny]
-     abcabcacab
+     abcabcacab \(\scriptstyle\fail(8)=5\)
 \gray{babcb}\green{abcabca}\ured{a}bcabcabcacabc
 \end{tverb}
 
 \begin{tverb}[fontsize=\tiny]
-        abcabcacab
+        abcabcacab \(\scriptstyle\fail(5)=1\)
 \gray{babcbabc}\lime{abca}\ured{a}bcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+            abcabcacab
+\gray{babcbabcabca}\ugrn{a}bcabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+            abcabcacab
+\gray{babcbabcabca}\green{a}\ugrn{b}cabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+            abcabcacab
+\gray{babcbabcabca}\green{ab}\ugrn{c}cabcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+            abcabcacab \(\scriptstyle\fail(4)=0\)
+\gray{babcbabcabca}\green{abc}\ured{c}abcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabc}\ul{\gray{c}}abcabcacabc
 \end{tverb}
 
 \end{minipage}%
 %
-\begin{minipage}[t]{.45\textwidth}
+%minipage #3
+\begin{minipage}[t]{.33\textwidth}
 
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\ugrn{a}bcabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\green{a}\ugrn{b}cabcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\green{ab}\ugrn{c}abcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\green{abc}\ugrn{a}bcacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\green{abca}\ugrn{b}cacabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\green{abcab}\ugrn{c}acabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\green{abcabc}\ugrn{a}cabc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\green{abcabca}\ugrn{c}abc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\green{abcabcac}\ugrn{a}bc
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                abcabcacab
+\gray{babcbabcabcaabcc}\green{abcabcaca}\ugrn{b}c
+\end{tverb}
+
+\begin{tverb}[fontsize=\tiny]
+                        abcabcacab
+\gray{babcbabcabcaabccabcabcac}\lime{ab}\ugrn{c}
+\end{tverb}
 \end{minipage}
 
 \end{frame}
 
-\begin{frame}
-\frametitle{改进暴力匹配算法}
-充分利用模式串 $P$ 的特点，事先算出一个函数fail。
+
+\begin{frame}{用$\fail$函数改进暴力匹配算法}
+
+观察上述过程，可以看出
 
 \begin{itemize}
-\item $\text{fail}(j)$ := 匹配过程中遇到$T_i$ 和 $P_j$ 失配时，接着拿 $T_i$ 和 $P_{\text{fail}(j)}$ 比较。
-\item $\text{fail}(j) = 0$ 意味着下一个可能的匹配点是 $i+1$。
-\item 算出 $\fail$ 函数之后可以在 $O(n + m)$ 的时间内完成字符串匹配。
+    \item 算法的过程大概是 $T_1$ 和 $P$里的若干个字符比较，$T_2$ 和 $P$ 里的若干个字符比较，……，$T_n$ 和 $P$ 里若干个字符比较。
+    \item 对于$T_i$的比较完成后，我们知道了 $T_{1..i}$ 的后缀当中是 $P$ 的前缀的最长后缀的长度。
+    \item 每次比较之后要么文本串$T$里的下划线右移，要么模式串$P$右移。二者的移动次数都不会超过$n$。
+    \item 算出 $\fail$ 函数之后可以在 $O(n)$ 的时间内完成字符串匹配。
 \end{itemize}
 
-
-\begin{table}[]
-\begin{tabular}{llllllllllll}
-下标$j$ & 1  & 2  & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
-$S_j$ & \str{a} & \str{b} & \str{c} & \str{a} & \str{b} & \str{c} & \str{a} & \str{c} & \str{a}  & \str{b} \\
-fail($j$) & 0  & 1  & 1 & 0 & 1 & 1 & 0 & 5  & 0  & 1
-\end{tabular}
-\end{table}
-
-\begin{block}{}
-如何计算 fail 函数？
-\end{block}
-
-
-
+\tcbox{如何计算$\fail$函数？}
 
 \end{frame}
+
 
 \begin{frame}{恰当前缀，前后缀}
 
@@ -469,7 +580,7 @@ fail($j$) & 0  & 1  & 1 & 0 & 1 & 1 & 0 & 5  & 0  & 1
 对于非空字符串 $S$，若字符串 $T$ 既是 $S$ 的恰当前缀也是 $S$ 的后缀，则称 $T$ 为 $S$ 的前后缀。例如 \str{abc} 的前后缀有：空串；\str{ababa} 的前后缀有：空串，\str{a}，\str{aba}；
 \str{aaa} 的前后缀有：空串，\str{a}，\str{aa}。
 
-任何非空字符串都有前后缀。
+\tcbox{任何非空字符串都有前后缀。}
 \end{block}
 
 \end{frame}
