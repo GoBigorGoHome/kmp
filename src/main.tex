@@ -11,6 +11,7 @@
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage{tcolorbox}
+\usepackage{siunitx}
 
 \newcommand{\ul}[1]{\underline{#1}}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
@@ -34,13 +35,12 @@
 
 \DefineVerbatimEnvironment%tight verbatim for code
 {cverb}{BVerbatim}
-{baselinestretch=0, fontsize=\small}
+{baselinestretch=0, fontsize=\tiny}
 
 
 % Document
 \begin{document}
 \title{KMP算法}
-\institute{小码王}
 \maketitle
 
 \begin{frame}[fragile]
@@ -737,11 +737,12 @@ abc\lime{a}\green{bca}\red{c}ab
 
 
 \begin{frame}[fragile]{代码}
+\begin{tcolorbox}
 \begin{cverb}
 fail[1] = 0;
 int t = 1;
 for (int j = 2; j <= m; j++) {
-// t = P[1..j - 1]的最长前后缀的长度加一
+// t是P[1..j - 1]的最长前后缀的长度加一
   if (P[j] != P[t])
     fail[j] = t;
   else
@@ -750,19 +751,113 @@ for (int j = 2; j <= m; j++) {
     t = fail[t];
   ++t;
 }
-fail[m + 1] = t;
-
+//此时t是P[1..m]的最长前后缀的长度加一。
+fail[m + 1] = t; //补充定义fail[m+1]
 int j = 1;
 for (int i = 1; i <= n; i++) {
   while (j != 0 and P[j] != T[i])
     j = fail[j];
   j++;
-  if (j > m) {
-    i - m + 1 是匹配点;
+  if (j == m + 1) {
+    //i - m + 1 是匹配点;
     j = fail[j];
   }
 }
 \end{cverb}
+\end{tcolorbox}
+
 \end{frame}
+
+
+\begin{frame}[fragile]{代码}
+字符串下标从$0$开始实际上更为常用，为此只需将上述代码稍作改动即可。
+
+\begin{tcolorbox}[sidebyside]
+\begin{cverb}
+fail[1] = 0;
+int t = 1;
+for (int j = 2; j <= m; j++) {
+// t是P[1..j - 1]的最长前后缀的长度加一
+  if (P[j] != P[t])
+    fail[j] = t;
+  else
+    fail[j] = fail[t];
+  while (t != 0 and P[t] != P[j])
+    t = fail[t];
+  ++t;
+}
+//此时t是P[1..m]的最长前后缀的长度加一。
+fail[m + 1] = t; //补充定义fail[m+1]
+int j = 1;
+for (int i = 1; i <= n; i++) {
+  while (j != 0 and P[j] != T[i])
+    j = fail[j];
+  j++;
+  if (j == m + 1) {
+    //i - m + 1 是匹配点;
+    j = fail[j];
+  }
+}
+\end{cverb}
+\tcblower
+\begin{cverb}[fontsize=\tiny]
+fail[0] = -1;
+int t = 0;
+for (int j = 1; j < m; j++) {
+// t 是 P[0..j-1]的最长前后缀的长度
+  if (P[j] != P[t])
+    fail[j] = t;
+  else
+    fail[j] = fail[t];
+  while (t != 0 and P[t] != P[j])
+    t = fail[t];
+  ++t;
+}
+//此时t是P[0..m-1]的最长前后缀的长度。
+fail[m] = t;
+int j = 0;
+for (int i = 0; i < n; i++) {
+  while (j != -1 and P[j] != T[i])
+    j = fail[j];
+  j++;
+  if (j == m) {
+    //i-m+1是匹配点。
+    j = fail[j];
+  }
+}
+\end{cverb}
+\end{tcolorbox}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{例题：abc257g Prefix Concatenation（前缀拼接）}
+给你两个由小写英文字母构成的字符串 $S$，$T$。
+
+求满足下列条件的最小正整数 $k$。
+\begin{itemize}
+    \item $T$可以由 $k$ 个 $S$ 的前缀拼接得到。
+\end{itemize}
+若$T$不能由若干$S$的前缀拼接得到，输出$-1$。
+
+\begin{itemize}
+    \item $1 \le |S|, |T| \le \num{5e5}$
+\end{itemize}
+
+\begin{tcolorbox}[sidebyside,title=样例]
+\begin{cverb}
+aba
+ababaab
+\end{cverb}
+\tcblower
+\begin{cverb}
+3
+\end{cverb}
+\end{tcolorbox}
+\verb|ababaab = ab + aba + ab|
+\end{frame}
+
+
+
 \end{document}
 %
