@@ -82,7 +82,7 @@ $S$ 是一个字符串。
 \item 模式串长度记作 $m$
 \end{itemize}
 
-若 $T_{i..m+i-1} = P$ 则称 $i$ 是\emph{匹配点}。
+若 $T_{i..i+m-1} = P$ 则称 $i$ 是\emph{匹配点}。
 
 \end{frame}
 
@@ -107,8 +107,6 @@ for (int i = 1; i <= n - m + 1; i++) {
 }
 \end{cverb}
 \end{tcolorbox}
-
-
 \end{frame}
 
 \begin{frame}[fragile]
@@ -261,16 +259,16 @@ babc\red{b}abcabcaabcabcabcacabc
 \end{itemize}
 用这两个条件就能断定随后的三次暴力匹配在$P_1$处就失配。 
 \begin{itemize}
-  \item $T_2 = P_2; P_2 \ne P_1 \implies T_2 \ne P_1$
-  \item $T_3 = P_3; P_3 \ne P_1 \implies T_3 \ne P_1$
-  \item $T_5 \ne P_4; P_4 = P_1 \implies T_4 \ne P_1$
+  \item $T_3 = P_2; P_2 \ne P_1 \implies T_3 \ne P_1$
+  \item $T_4 = P_3; P_3 \ne P_1 \implies T_4 \ne P_1$
+  \item $T_5 \ne P_4; P_4 = P_1 \implies T_5 \ne P_1$
 \end{itemize}
 
 \end{frame}
 
 \begin{frame}
   \frametitle{改进暴力匹配算法}
-从上面的分析可以看出，如果我们{\kaishu 事先好好地研究模式串 $P$，把它的一切性质都记住}，那么在暴力比配的过程中，一旦我们获得文本串 $T$ 的一些信息，以后就能避免将 $P$ 里的字符和 $B$ 里的字符进行{\kaishu 不必要的比较}。 
+从上面的分析可以看出，如果我们{\kaishu 事先好好地研究模式串 $P$，把它的一切性质都记住}，那么在暴力匹配的过程中，一旦我们获得文本串 $T$ 的一些信息，以后就能避免将 $P$ 里的字符和 $T$ 里的字符进行{\kaishu 不必要的比较}。 
 
 \tcbox{充分利用模式串就能避免不必要的比较。}
 
@@ -311,7 +309,7 @@ abcabcacab
 
 \begin{tverb}[frame=bottomline, fontsize=\small]
         abcabcacab
-\gray{babcba}\pink{bc}\lime{abca}\purple{a}bcabcabcacabc
+\gray{babcba}\pink{bc}\lime{abca}abcabcabcacabc
 \end{tverb}
 
 \begin{tverb}[frame=bottomline, fontsize=\small]
@@ -321,7 +319,7 @@ abcabcacab
 
 \begin{tverb}[frame=bottomline, fontsize=\small]
             abcabcacab
-\gray{babcbabca}\pink{bca}\purple{a}bcabcabcacabc
+\gray{babcbabca}\pink{bca}abcabcabcacabc
 \end{tverb}
 
 \begin{tverb}[frame=bottomline, fontsize=\small]
@@ -331,7 +329,7 @@ abcabcacab
 
 \begin{tverb}[frame=bottomline, fontsize=\small]
                abcabcacab
-\gray{babcbabcabcaa}\pink{bc}\lime{abca}\purple{b}cacabc
+\gray{babcbabcabcaa}\pink{bc}\lime{abca}bcacabc
 \end{tverb}
 
 \begin{tverb}[frame=bottomline, fontsize=\small]
@@ -397,7 +395,7 @@ $P_{i-k+1} \ne P_j$ 即 $P_1 \ne P_j$。
     \begin{itemize}
       \item 用来找下一个可能的匹配点的条件都是关于模式串$P$的。换言之，下一个可能的匹配点只与 $P$ 有关，所以可以在开始匹配之前算出来。
       \item {\kaishu 找到下一个可能的匹配点 $k$ 之后就从 $T_i$ 和 $P_{i - k + 1}$ 开始继续比较，不必从 $T_k$ 和 $P_1$ 开始比较。}
-      \item 实际上我们要找的不是下一个匹配点 $k$ 而是 $i-k+1$，也就是下一次该拿 $T_i$ 和 $P$ 里的哪一个字符比较。
+      \item 实际上我们要找的不是下一个匹配点 $k$ 而是 $i-k+1$，也就是下一次该拿 $T_i$ 和 $P$ 的哪一个字符比较。
       \end{itemize}
   \end{tcolorbox}
 
@@ -982,6 +980,8 @@ fail[m + 1] = t;
 字符串下标从$0$开始实际上更为常用，为此只需将上面的代码稍作改动。
 
 \begin{tcolorbox}[sidebyside]
+下标从 $1$ 开始：
+
 \begin{cverb}
 fail[1] = 0;
 int t = 1;
@@ -1008,7 +1008,11 @@ for (int i = 1; i <= n; i++) {
   }
 }
 \end{cverb}
+
 \tcblower
+
+下标从$0$开始：
+
 \begin{cverb}[fontsize=\tiny]
 fail[0] = -1;
 int t = 0;
@@ -1018,7 +1022,7 @@ for (int j = 1; j < m; j++) {
     fail[j] = t;
   else
     fail[j] = fail[t];
-  while (t != 0 and P[t] != P[j])
+  while (t != -1 and P[t] != P[j])
     t = fail[t];
   ++t;
 }
@@ -1066,7 +1070,25 @@ ababaab
 \verb|ababaab = ab + aba + ab|
 \end{frame}
 
-
-
+\begin{frame}[fragile]{例题：abc343g Compress Strings}
+  给你 $N$ 个字符串 $S_1, S_2, \dots, S_N$。求包含所有这些字符串（作为子串）的字符串的最小长度。
+  \begin{itemize}
+    \item $N \le 20$
+    \item $S_1, S_2, \dots, S_N$ 的总长度不超过 $2\times 10^5$。
+  \end{itemize}
+  \begin{tcolorbox}[sidebyside,title=样例]
+    \begin{cverb}
+    3
+    snuke
+    kensho
+    uk      
+    \end{cverb}
+    \tcblower
+    \begin{cverb}
+    9
+    \end{cverb}
+  \end{tcolorbox}
+  \verb|snukensho|
+\end{frame}
 \end{document}
 %
